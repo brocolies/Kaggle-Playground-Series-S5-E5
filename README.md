@@ -1,79 +1,77 @@
-# 🏆 Kaggle Playground Series - Season X Episode Y
+# 🧠 Predict Calories from Biometric Data
 
-> **Problem Type:** Regression  
-> **Goal:** Predict calories consumption based on biometric and activity data  
-> **Evaluation Metric:** RMSLE  
-> **Dataset Size:** 750k rows (train), 250k rows (test)
+> A regression challenge to predict calories burned using biometric and activity records.  
+> Participated as part of Kaggle Playground Series SxEy.
 
 ---
 
-## 📁 File Structure
+## 🔍 Problem Overview
 
-| File                  | Description                     |
-|-----------------------|---------------------------------|
-| `train.csv`           | Training data                   |
-| `test.csv`            | Test data                       |
-| `sample_submission.csv` | Sample submission format       |
-| `PredictCal2.ipynb`   | Main analysis notebook          |
-| `submission.csv`      | Final submission file           |
+- **Task:** Predict total calories consumed
+- **Type:** Supervised regression
+- **Metric:** RMSLE (Root Mean Squared Log Error)
+- **Dataset:** 750k training / 250k test samples
 
 ---
 
-## 💡 Key Learnings
+## 🧑‍💻 What I Learned
 
-In this project, I gained the following insights:
+This project was not just about modeling — it was about structuring my ML thinking. I learned:
 
-- Efficient handling of large tabular data (~750k rows) using pandas.
-- Importance of exploring feature distribution (e.g., skewness, log transformation).
-- RMSLE penalizes underestimation more heavily than RMSE, which influences model strategy.
-- Leveraging `XGBoostRegressor` with early stopping and basic hyperparameter tuning.
-- Designing preprocessing pipelines that are robust and test-compatible.
+1. **Data Distribution Matters**  
+   → Skewed target distributions can distort predictions; log-transforming helped align the loss function.
 
-> ✍️ Use this section to reflect on what you learned, what worked well, and what could be improved in future projects.
+2. **Model Choice vs. Metric**  
+   → RMSLE penalizes under-predictions more — an insight that influenced feature scaling and outlier treatment.
 
----
+3. **Feature Engineering is King**  
+   → Creating features like `EnergyProxy` (Intensity × Duration) had measurable impact.
 
-## 🔎 Key Feature Engineering
+4. **Practical XGBoost Usage**  
+   → Early stopping, `eval_set`, and using validation fold properly allowed stable training.
 
-| Feature Name  | Description                                            |
-|---------------|--------------------------------------------------------|
-| `BMI`         | Body Mass Index calculated from height and weight     |
-| `Intensity`   | Activity intensity derived from heart rate and temp   |
-| `EnergyProxy` | Estimated energy consumption = Duration × Intensity   |
+5. **Organizing a Kaggle Pipeline**  
+   → End-to-end flow from EDA → feature engineering → validation → inference → submission is now repeatable.
 
 ---
 
-## 📊 Model Details
+## 🧪 Experiment Summary
 
-| Item              | Value                                       |
-|-------------------|---------------------------------------------|
-| Model Used        | XGBoost                                     |
-| Hyperparameters   | `learning_rate=0.05`, `max_depth=6`, `n_estimators=1000` |
-| Evaluation Metric | RMSLE                                       |
-| Validation Split  | `train_test_split` with 80:20 split         |
-
----
-
-## ✅ Result Summary
-
-| Stage             | Score    |
-|-------------------|----------|
-| Local Validation  | 0.0629   |
-| Kaggle Public LB  | 0.57409  |
+| Model         | CV Method        | RMSLE (val) | Notes                             |
+|---------------|------------------|--------------|------------------------------------|
+| XGBoostRegressor | train/test split (80:20) | 0.0629       | baseline model                     |
+| Ridge          | train/test split | 0.074        | poor fit due to linear assumption |
+| XGBoost tuned  | 5-Fold CV        | 0.058 (CV)   | better generalization              |
 
 ---
 
-## 🚀 To Be Improved
+## 🔬 Key Features
 
-- [ ] Feature selection and removal based on importance
-- [ ] Cross-validation for more robust evaluation
-- [ ] Try model ensembling (Stacking / Voting)
-- [ ] Improve feature scaling and handle outliers more precisely
+| Feature       | Description                              |
+|---------------|------------------------------------------|
+| `BMI`         | Weight / Height²                         |
+| `Intensity`   | Proxy for activity strength (HR + Temp)  |
+| `EnergyProxy` | Duration × Intensity                     |
 
 ---
 
-## 📌 Notes
+## 🚀 Room for Improvement
 
-- All code was written and tested in a Jupyter Notebook.
-- The final submission is a CSV with `id` and predicted `Calories`.
-- Competition link: [https://www.kaggle.com/competitions/your-competition](https://www.kaggle.com/competitions/your-competition)
+- Refine feature selection by importance or SHAP values
+- Switch to full K-Fold validation pipeline
+- Experiment with ensembling (Voting / Stacking)
+- Better handling of outliers & target clipping
+
+---
+
+## 📎 Notes for Future Me
+
+- Start from data distribution understanding, not from modeling.
+- Never skip log-transform checks for regression metrics like RMSLE.
+- Think: "If I had to redo this in 1 hour, what could I reuse or automate?"
+
+---
+
+## 🔗 Competition Link
+
+[👉 View on Kaggle](https://www.kaggle.com/competitions/your-competition)
