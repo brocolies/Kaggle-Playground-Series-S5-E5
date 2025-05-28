@@ -1,9 +1,9 @@
 # 🏆 Kaggle Playground Series - Season X Episode Y
 
-> **문제 유형:** [회귀 / 분류]  
-> **목표:** [예: 칼로리 소모량 예측 / 신용 대출 상환 여부 분류]  
-> **평가 지표:** [예: RMSLE / ROC AUC]  
-> **데이터 크기:** [예: train 75만 rows, test 25만 rows]
+> **문제 유형:** Regression
+> **목표:** Predict calories consumtion 
+> **평가 지표:** RMSLE  
+> **데이터 크기:** train data 750k rows, test data 250k rows
 
 ---
 
@@ -12,9 +12,9 @@
 | File                | 설명 |
 |---------------------|------|
 | `train.csv`         | 학습용 데이터 |
-| `test.csv`          | 테스트 데이터 (label 없음) |
+| `test.csv`          | 테스트 데이터 |
 | `sample_submission.csv` | 제출 형식 예시 |
-| `PredictCal.ipynb`  | 전체 분석 노트북 |
+| `PredictCal2.ipynb`  | 전체 분석 노트북 |
 | `submission.csv`    | 최종 제출 파일 |
 
 ---
