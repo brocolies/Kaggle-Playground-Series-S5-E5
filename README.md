@@ -1,7 +1,7 @@
 # 🧠 Predict Calories from Biometric Data
 
 > A regression challenge to predict calories burned using biometric and activity records.  
-> Participated as part of Kaggle Playground Series SxEy.
+> Participated as part of Kaggle Playground Series S5E5.
 
 ---
 
