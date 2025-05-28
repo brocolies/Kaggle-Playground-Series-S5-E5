@@ -21,19 +21,14 @@
    → From now on, I will always begin by sketching a clear pipeline and outlining how features relate before implementing.
 
 1. **Target transformation using `QuantileTransformer`**  
-   I used `QuantileTransformer(output_distribution='normal')` to normalize the target variable.  
+   Used `QuantileTransformer(output_distribution='normal')` to normalize the target variable.  
    - Helps stabilize variance and meet model assumptions  
-   - Apply `fit_transform()` only to train  
-   - Use `transform()` for validation/test  
-   - Must use `inverse_transform()` after prediction to revert to original scale  
 
 2. **EDA is about making decisions, not just reading charts**  
-   I learned to stop passively “observing” data and instead actively design how to handle each feature.  
-   - Decide: What should be dropped?  
-   - Decide: What should be combined, transformed, or used as-is?
+   Learned to stop passively “observing” data and instead actively design how to handle each feature.  
 
 3. **Outliers and skewness aren't always bad**  
-   Instead of dropping extreme values, I learned to create indicator variables that inform the model.  
+   Instead of dropping extreme values, create indicator variables that inform the model.  
    This preserves useful information and enhances model robustness without hiding complexity.
 
 ---
@@ -59,8 +54,6 @@
 ## Room for Improvement
 
 - Refine feature selection using SHAP values or model-based importance
-- Replace simple holdout with full K-Fold CV
-- Experiment with ensembling: Voting or Stacking
 - Enhance treatment of outliers and explore better clipping strategies
 
 ---
