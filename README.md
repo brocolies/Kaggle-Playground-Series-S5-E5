@@ -16,22 +16,15 @@
 
 ## 🧑‍💻 What I Learned
 
-This project was not just about modeling — it was about structuring my ML thinking. I learned:
-
-1. **Data Distribution Matters**  
-   → Skewed target distributions can distort predictions; log-transforming helped align the loss function.
-
-2. **Model Choice vs. Metric**  
-   → RMSLE penalizes under-predictions more — an insight that influenced feature scaling and outlier treatment.
-
-3. **Feature Engineering is King**  
-   → Creating features like `EnergyProxy` (Intensity × Duration) had measurable impact.
-
-4. **Practical XGBoost Usage**  
-   → Early stopping, `eval_set`, and using validation fold properly allowed stable training.
-
-5. **Organizing a Kaggle Pipeline**  
-   → End-to-end flow from EDA → feature engineering → validation → inference → submission is now repeatable.
+	0.	Importance of initial data exploration and pipeline planning
+At first, I skipped building a high-level overview of the problem and jumped into feature interpretation. Later, I realized that key features like gender significantly affected numeric columns, forcing me to revise earlier steps.
+From this, I learned the importance of sketching out the full pipeline and structure before starting detailed work.
+	1.	Target transformation using QuantileTransformer
+Learned to map target values to a normal distribution using QuantileTransformer(output_distribution='normal'). This helps stabilize variance and align with model assumptions. Crucially, only transform() is applied to validation/test sets (to preserve generalization), and inverse_transform() is used after prediction to restore the original scale.
+	2.	EDA is not just interpretation—it’s decision-making
+Rather than passively reading charts, EDA requires actively designing how to process the data. This shift in perspective helped me better control how features are treated during preprocessing.
+	3.	Outliers and skewed values are not always ‘bad’
+Instead of removing extreme values outright, I learned it’s often more effective to flag them as indicators. This provides the model with contextual signals, preserving information rather than discarding it.
 
 ---
 
