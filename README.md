@@ -1,70 +1,78 @@
-# 🧠 Predict Calories from Biometric Data
+# Predict Calories from Biometric Data
 
 > A regression challenge to predict calories burned using biometric and activity records.  
 > Participated as part of Kaggle Playground Series S5E5.
 
 ---
 
-## 🔍 Problem Overview
+## Problem Overview
 
-- **Task:** Predict total calories consumed
-- **Type:** Supervised regression
-- **Metric:** RMSLE (Root Mean Squared Log Error)
-- **Dataset:** 750k training / 250k test samples
-
----
-
-## 🧑‍💻 What I Learned
-
-	0.	Importance of initial data exploration and pipeline planning
-At first, I skipped building a high-level overview of the problem and jumped into feature interpretation. Later, I realized that key features like gender significantly affected numeric columns, forcing me to revise earlier steps.
-From this, I learned the importance of sketching out the full pipeline and structure before starting detailed work.
-	1.	Target transformation using QuantileTransformer
-Learned to map target values to a normal distribution using QuantileTransformer(output_distribution='normal'). This helps stabilize variance and align with model assumptions. Crucially, only transform() is applied to validation/test sets (to preserve generalization), and inverse_transform() is used after prediction to restore the original scale.
-	2.	EDA is not just interpretation—it’s decision-making
-Rather than passively reading charts, EDA requires actively designing how to process the data. This shift in perspective helped me better control how features are treated during preprocessing.
-	3.	Outliers and skewed values are not always ‘bad’
-Instead of removing extreme values outright, I learned it’s often more effective to flag them as indicators. This provides the model with contextual signals, preserving information rather than discarding it.
+- **Task:** Predict total calories consumed  
+- **Type:** Supervised regression  
+- **Metric:** RMSLE (Root Mean Squared Log Error)  
+- **Dataset:** 750k training / 250k test samples  
 
 ---
 
-## 🧪 Experiment Summary
+## What I Learned
 
-| Model         | CV Method        | RMSLE (val) | Notes                             |
-|---------------|------------------|--------------|------------------------------------|
-| XGBoostRegressor | train/test split (80:20) | 0.0629       | baseline model                     |
-| Ridge          | train/test split | 0.074        | poor fit due to linear assumption |
-| XGBoost tuned  | 5-Fold CV        | 0.058 (CV)   | better generalization              |
+0. **Plan the pipeline before diving into details**  
+   Early in the process, I skipped comprehensive data exploration and started directly with feature analysis. Later, I realized that key variables like `gender` heavily influenced numerical columns, requiring me to restart some parts.  
+   → From now on, I will always begin by sketching a clear pipeline and outlining how features relate before implementing.
+
+1. **Target transformation using `QuantileTransformer`**  
+   I used `QuantileTransformer(output_distribution='normal')` to normalize the target variable.  
+   - Helps stabilize variance and meet model assumptions  
+   - Apply `fit_transform()` only to train  
+   - Use `transform()` for validation/test  
+   - Must use `inverse_transform()` after prediction to revert to original scale  
+
+2. **EDA is about making decisions, not just reading charts**  
+   I learned to stop passively “observing” data and instead actively design how to handle each feature.  
+   - Decide: What should be dropped?  
+   - Decide: What should be combined, transformed, or used as-is?
+
+3. **Outliers and skewness aren't always bad**  
+   Instead of dropping extreme values, I learned to create indicator variables that inform the model.  
+   This preserves useful information and enhances model robustness without hiding complexity.
 
 ---
 
-## 🔬 Key Features
+## Experiment Summary
+
+| Model            | Validation Method   | RMSLE (val) | Notes                             |
+|------------------|---------------------|-------------|------------------------------------|
+| XGBoost baseline | 80/20 split         | 0.0626      | Initial model without tuning       |
+| XGBoost (tuned)  | 5-Fold CV           | 0.059       | Improved generalization            |
+
+---
+
+## Key Features
 
 | Feature       | Description                              |
 |---------------|------------------------------------------|
-| `BMI`         | Weight / Height²                         |
 | `Intensity`   | Proxy for activity strength (HR + Temp)  |
 | `EnergyProxy` | Duration × Intensity                     |
 
 ---
 
-## 🚀 Room for Improvement
+## Room for Improvement
 
-- Refine feature selection by importance or SHAP values
-- Switch to full K-Fold validation pipeline
-- Experiment with ensembling (Voting / Stacking)
-- Better handling of outliers & target clipping
-
----
-
-## 📎 Notes for Future Me
-
-- Start from data distribution understanding, not from modeling.
-- Never skip log-transform checks for regression metrics like RMSLE.
-- Think: "If I had to redo this in 1 hour, what could I reuse or automate?"
+- Refine feature selection using SHAP values or model-based importance
+- Replace simple holdout with full K-Fold CV
+- Experiment with ensembling: Voting or Stacking
+- Enhance treatment of outliers and explore better clipping strategies
 
 ---
 
-## 🔗 Competition Link
+## Notes for Future Me
 
-[👉 View on Kaggle](https://www.kaggle.com/competitions/your-competition)
+- Always begin with a clear understanding of data distribution and structure
+- Use log-scale or transformation checks early when RMSLE is the metric
+- Automate and modularize reusable pipeline steps—optimize for repeatability
+
+---
+
+## Competition Link
+
+[🔗 View on Kaggle](https://www.kaggle.com/competitions/your-competition)
